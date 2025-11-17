@@ -1,7 +1,9 @@
+import java.io.File
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -21,7 +23,7 @@ android {
         buildConfigField(
             "String",
             "OMDB_API_KEY",
-            "\"YOUR_OMDB_API_KEY\""
+            "\"2cda5345\""
         )
     }
 
@@ -44,13 +46,19 @@ android {
         jvmToolchain(17)
     }
 
+    kotlinOptions {
+        freeCompilerArgs += listOf(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        )
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.12"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
 
     packaging {
@@ -58,6 +66,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.generateKotlin", "true")
 }
 
 dependencies {
@@ -83,12 +96,13 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.play.services.location)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.material)
 
     implementation(libs.coil.compose)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

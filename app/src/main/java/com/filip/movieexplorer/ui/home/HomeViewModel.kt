@@ -1,5 +1,6 @@
 package com.filip.movieexplorer.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -21,15 +22,20 @@ class HomeViewModel(
 
     init {
         viewModelScope.launch {
-            movieRepository.observeFavorites().collectLatest { favorites ->
-                _uiState.value = _uiState.value.copy(
-                    favoriteIds = favorites.map { it.imdbId }.toSet()
-                )
+            try {
+                movieRepository.observeFavorites().collectLatest { favorites ->
+                    _uiState.value = _uiState.value.copy(
+                        favoriteIds = favorites.map { it.imdbId }.toSet()
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error observing favorites", e)
             }
         }
     }
 
     fun search(query: String) {
+        Log.d(TAG, "Search called with query: $query")
         if (query.isBlank()) {
             _uiState.value = HomeUiState(
                 isLoading = false,
@@ -48,40 +54,59 @@ class HomeViewModel(
         )
 
         viewModelScope.launch {
-            val result = movieRepository.searchMovies(query)
-            _uiState.value = result.fold(
-                onSuccess = { movies ->
-                    _uiState.value.copy(
-                        isLoading = false,
-                        movies = movies,
-                        errorMessage = null,
-                        lastQuery = query
-                    )
-                },
-                onFailure = { throwable ->
-                    _uiState.value.copy(
-                        isLoading = false,
-                        movies = emptyList(),
-                        errorMessage = throwable.message ?: "Unknown error",
-                        lastQuery = query
-                    )
-                }
-            )
+            try {
+                val result = movieRepository.searchMovies(query)
+                val currentFavorites = _uiState.value.favoriteIds
+                _uiState.value = result.fold(
+                    onSuccess = { movies ->
+                        Log.d(TAG, "Search successful: ${movies.size} movies found")
+                        HomeUiState(
+                            isLoading = false,
+                            movies = movies,
+                            errorMessage = null,
+                            lastQuery = query,
+                            favoriteIds = currentFavorites
+                        )
+                    },
+                    onFailure = { throwable ->
+                        Log.e(TAG, "Search failed", throwable)
+                        HomeUiState(
+                            isLoading = false,
+                            movies = emptyList(),
+                            errorMessage = throwable.message ?: "Unknown error",
+                            lastQuery = query,
+                            favoriteIds = currentFavorites
+                        )
+                    }
+                )
+            } catch (e: Exception) {
+                Log.e(TAG, "Unexpected error during search", e)
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    errorMessage = "Unexpected error: ${e.message}"
+                )
+            }
         }
     }
 
     fun toggleFavorite(movie: MovieSummary) {
         viewModelScope.launch {
-            val isFavorite = _uiState.value.favoriteIds.contains(movie.imdbId)
-            if (isFavorite) {
-                movieRepository.removeFavorite(movie.imdbId)
-            } else {
-                movieRepository.addFavorite(movie.toFavoriteMovie())
+            try {
+                val isFavorite = _uiState.value.favoriteIds.contains(movie.imdbId)
+                if (isFavorite) {
+                    movieRepository.removeFavorite(movie.imdbId)
+                } else {
+                    movieRepository.addFavorite(movie.toFavoriteMovie())
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error toggling favorite", e)
             }
         }
     }
 
     companion object {
+        private const val TAG = "HomeViewModel"
+        
         fun provideFactory(
             repository: MovieRepository
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {

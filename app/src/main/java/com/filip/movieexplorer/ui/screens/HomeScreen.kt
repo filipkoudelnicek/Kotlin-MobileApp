@@ -12,10 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -111,7 +111,7 @@ fun HomeScreen(
                     }
                     IconButton(onClick = onNavigateToLocation) {
                         Icon(
-                            imageVector = Icons.Default.MyLocation,
+                            imageVector = Icons.Default.LocationOn,
                             contentDescription = "Location"
                         )
                     }
@@ -241,7 +241,7 @@ private fun MovieListItem(
                 Text(text = movie.type.uppercase())
             }
             IconButton(onClick = onToggleFavorite) {
-                val icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline
+                val icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star
                 Icon(
                     imageVector = icon,
                     contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites"

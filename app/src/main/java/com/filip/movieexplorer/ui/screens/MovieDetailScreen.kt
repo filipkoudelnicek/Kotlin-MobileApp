@@ -12,7 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -85,7 +85,7 @@ fun MovieDetailScreen(
                 },
                 actions = {
                     IconButton(onClick = onToggleFavorite, enabled = state.movie != null) {
-                        val icon = if (state.isFavorite) Icons.Default.Star else Icons.Outlined.StarOutline
+                        val icon = if (state.isFavorite) Icons.Default.Star else Icons.Outlined.Star
                         Icon(
                             imageVector = icon,
                             contentDescription = if (state.isFavorite) "Remove from favorites" else "Add to favorites"
