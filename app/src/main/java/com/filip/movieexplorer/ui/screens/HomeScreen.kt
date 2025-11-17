@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -75,6 +76,7 @@ fun HomeRoute(
         onQueryChange = { query = it },
         onSearch = { viewModel.search(query) },
         onMovieClick = onNavigateToDetails,
+        onToggleFavorite = { viewModel.toggleFavorite(it) },
         onNavigateToFavorites = onNavigateToFavorites,
         onRetry = { viewModel.search(query.ifBlank { uiState.lastQuery }) }
     )
@@ -87,6 +89,7 @@ fun HomeScreen(
     onQueryChange: (String) -> Unit,
     onSearch: () -> Unit,
     onMovieClick: (String) -> Unit,
+    onToggleFavorite: (MovieSummary) -> Unit,
     onNavigateToFavorites: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
@@ -169,7 +172,9 @@ fun HomeScreen(
                         items(state.movies, key = { it.imdbId }) { movie ->
                             MovieListItem(
                                 movie = movie,
-                                onClick = { onMovieClick(movie.imdbId) }
+                                isFavorite = state.favoriteIds.contains(movie.imdbId),
+                                onClick = { onMovieClick(movie.imdbId) },
+                                onToggleFavorite = { onToggleFavorite(movie) }
                             )
                         }
                     }
@@ -182,7 +187,9 @@ fun HomeScreen(
 @Composable
 private fun MovieListItem(
     movie: MovieSummary,
-    onClick: () -> Unit
+    isFavorite: Boolean,
+    onClick: () -> Unit,
+    onToggleFavorite: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -211,7 +218,9 @@ private fun MovieListItem(
                 placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
                 error = painterResource(id = R.drawable.ic_launcher_foreground)
             )
-            Column(modifier = Modifier.weight(1f)) {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(
                     text = movie.title,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
@@ -220,6 +229,13 @@ private fun MovieListItem(
                 )
                 Text(text = movie.year)
                 Text(text = movie.type.uppercase())
+            }
+            IconButton(onClick = onToggleFavorite) {
+                val icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline
+                Icon(
+                    imageVector = icon,
+                    contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites"
+                )
             }
         }
     }

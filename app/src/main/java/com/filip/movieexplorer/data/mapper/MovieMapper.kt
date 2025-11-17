@@ -49,4 +49,22 @@ fun FavoriteMovie.toEntity(): FavoriteMovieEntity = FavoriteMovieEntity(
     posterUrl = posterUrl
 )
 
+fun MovieSummary.toFavoriteMovie(): FavoriteMovie = FavoriteMovie(
+    imdbId = imdbId,
+    title = title,
+    year = year,
+    director = "",
+    genre = "",
+    posterUrl = posterUrl
+)
+
+fun MovieDetail.toFavoriteMovie(): FavoriteMovie = FavoriteMovie(
+    imdbId = imdbId,
+    title = title,
+    year = year,
+    director = director,
+    genre = genre,
+    posterUrl = posterUrl
+)
+
 
