@@ -1,8 +1,10 @@
 package com.filip.movieexplorer.data
 
 /**
- * Placeholder for data layer initialization.
- * Real implementations (Room, Retrofit, repositories) will be added in later commits.
+ * Data layer package.
+ * 
+ * Contains:
+ * - network: OMDb API client (Retrofit, DTOs, configuration)
+ * - Room database and repositories will be added in later commits.
  */
-object DataLayerPlaceholder
 
