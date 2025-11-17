@@ -6,7 +6,8 @@ data class HomeUiState(
     val isLoading: Boolean = false,
     val movies: List<MovieSummary> = emptyList(),
     val errorMessage: String? = null,
-    val lastQuery: String = ""
+    val lastQuery: String = "",
+    val favoriteIds: Set<String> = emptySet()
 )
 
 

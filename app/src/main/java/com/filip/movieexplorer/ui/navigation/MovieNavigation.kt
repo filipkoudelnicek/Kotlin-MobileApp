@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.filip.movieexplorer.ui.screens.FavoritesScreen
+import com.filip.movieexplorer.ui.screens.FavoritesRoute
 import com.filip.movieexplorer.ui.screens.HomeRoute
 import com.filip.movieexplorer.ui.screens.MovieDetailRoute
 
@@ -48,9 +48,12 @@ fun MovieNavigation(
         }
         
         composable(NavDestinations.FAVORITES) {
-            FavoritesScreen(
+            FavoritesRoute(
                 onNavigateBack = {
                     navController.popBackStack()
+                },
+                onMovieClick = { imdbId ->
+                    navController.navigate(NavDestinations.detailsRoute(imdbId))
                 }
             )
         }
