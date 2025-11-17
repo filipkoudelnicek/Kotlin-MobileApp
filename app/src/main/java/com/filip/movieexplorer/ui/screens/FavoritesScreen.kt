@@ -3,16 +3,18 @@ package com.filip.movieexplorer.ui.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -28,6 +30,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -144,10 +147,12 @@ private fun FavoriteMovieItem(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp)
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -156,21 +161,29 @@ private fun FavoriteMovieItem(
                     .build(),
                 contentDescription = movie.title,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp),
+                    .size(72.dp),
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
                 error = painterResource(id = R.drawable.ic_launcher_foreground)
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = movie.title,
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(text = "${movie.year} • ${movie.genre}")
-            Text(text = "Režisér: ${movie.director}")
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = movie.title,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(text = movie.year)
+            }
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Filled.Star,
+                    contentDescription = "Favorite",
+                    tint = Color(0xFFFFD700)
+                )
+            }
             IconButton(onClick = onRemove) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
