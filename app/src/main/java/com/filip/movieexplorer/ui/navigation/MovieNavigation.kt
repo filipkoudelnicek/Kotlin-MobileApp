@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.filip.movieexplorer.ui.screens.FavoritesScreen
-import com.filip.movieexplorer.ui.screens.HomeScreen
+import com.filip.movieexplorer.ui.screens.HomeRoute
 import com.filip.movieexplorer.ui.screens.MovieDetailScreen
 
 @Composable
@@ -20,7 +20,7 @@ fun MovieNavigation(
         startDestination = NavDestinations.HOME
     ) {
         composable(NavDestinations.HOME) {
-            HomeScreen(
+            HomeRoute(
                 onNavigateToDetails = { imdbId ->
                     navController.navigate(NavDestinations.detailsRoute(imdbId))
                 },
