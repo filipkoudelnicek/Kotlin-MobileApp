@@ -11,6 +11,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,7 +60,8 @@ fun MovieDetailRoute(
     MovieDetailScreen(
         state = uiState,
         onNavigateBack = onNavigateBack,
-        onRetry = { viewModel.loadMovie(imdbId) }
+        onRetry = { viewModel.loadMovie(imdbId) },
+        onToggleFavorite = { viewModel.toggleFavorite() }
     )
 }
 
@@ -66,7 +69,8 @@ fun MovieDetailRoute(
 fun MovieDetailScreen(
     state: MovieDetailUiState,
     onNavigateBack: () -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onToggleFavorite: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -77,6 +81,15 @@ fun MovieDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    IconButton(onClick = onToggleFavorite, enabled = state.movie != null) {
+                        val icon = if (state.isFavorite) Icons.Default.Star else Icons.Outlined.StarOutline
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = if (state.isFavorite) "Remove from favorites" else "Add to favorites"
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
