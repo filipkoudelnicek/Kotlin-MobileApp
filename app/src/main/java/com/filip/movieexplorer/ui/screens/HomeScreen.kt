@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
@@ -55,7 +56,8 @@ import com.filip.movieexplorer.ui.home.HomeViewModel
 @Composable
 fun HomeRoute(
     onNavigateToDetails: (String) -> Unit,
-    onNavigateToFavorites: () -> Unit
+    onNavigateToFavorites: () -> Unit,
+    onNavigateToLocation: () -> Unit
 ) {
     val app = LocalContext.current.applicationContext as MovieExplorerApp
     val viewModel: HomeViewModel = viewModel(
@@ -78,6 +80,7 @@ fun HomeRoute(
         onMovieClick = onNavigateToDetails,
         onToggleFavorite = { viewModel.toggleFavorite(it) },
         onNavigateToFavorites = onNavigateToFavorites,
+        onNavigateToLocation = onNavigateToLocation,
         onRetry = { viewModel.search(query.ifBlank { uiState.lastQuery }) }
     )
 }
@@ -91,6 +94,7 @@ fun HomeScreen(
     onMovieClick: (String) -> Unit,
     onToggleFavorite: (MovieSummary) -> Unit,
     onNavigateToFavorites: () -> Unit,
+    onNavigateToLocation: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -103,6 +107,12 @@ fun HomeScreen(
                         Icon(
                             imageVector = Icons.Default.Star,
                             contentDescription = "Favorites"
+                        )
+                    }
+                    IconButton(onClick = onNavigateToLocation) {
+                        Icon(
+                            imageVector = Icons.Default.MyLocation,
+                            contentDescription = "Location"
                         )
                     }
                 },
