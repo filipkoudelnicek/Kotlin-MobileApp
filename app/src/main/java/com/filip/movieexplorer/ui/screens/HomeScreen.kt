@@ -38,6 +38,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -238,13 +239,13 @@ private fun MovieListItem(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(text = movie.year)
-                Text(text = movie.type.uppercase())
             }
             IconButton(onClick = onToggleFavorite) {
                 val icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star
                 Icon(
                     imageVector = icon,
-                    contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites"
+                    contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
+                    tint = if (isFavorite) Color(0xFFFFD700) else MaterialTheme.colorScheme.onSurface
                 )
             }
         }

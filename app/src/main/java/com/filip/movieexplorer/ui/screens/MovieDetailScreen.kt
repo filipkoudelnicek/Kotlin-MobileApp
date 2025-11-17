@@ -28,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -88,7 +89,8 @@ fun MovieDetailScreen(
                         val icon = if (state.isFavorite) Icons.Default.Star else Icons.Outlined.Star
                         Icon(
                             imageVector = icon,
-                            contentDescription = if (state.isFavorite) "Remove from favorites" else "Add to favorites"
+                            contentDescription = if (state.isFavorite) "Remove from favorites" else "Add to favorites",
+                            tint = if (state.isFavorite) Color(0xFFFFD700) else MaterialTheme.colorScheme.onSurface
                         )
                     }
                 },
