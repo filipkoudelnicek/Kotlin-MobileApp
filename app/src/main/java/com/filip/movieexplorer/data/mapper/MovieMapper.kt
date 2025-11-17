@@ -1,7 +1,9 @@
 package com.filip.movieexplorer.data.mapper
 
+import com.filip.movieexplorer.data.local.entity.FavoriteMovieEntity
 import com.filip.movieexplorer.data.network.dto.MovieDetailDto
 import com.filip.movieexplorer.data.network.dto.MovieSearchItemDto
+import com.filip.movieexplorer.domain.model.FavoriteMovie
 import com.filip.movieexplorer.domain.model.MovieDetail
 import com.filip.movieexplorer.domain.model.MovieSummary
 
@@ -27,6 +29,24 @@ fun MovieDetailDto.toDomain(): MovieDetail = MovieDetail(
         ?: "",
     actors = actors.orEmpty(),
     imdbRating = imdbRating.orEmpty()
+)
+
+fun FavoriteMovieEntity.toDomain(): FavoriteMovie = FavoriteMovie(
+    imdbId = imdbId,
+    title = title,
+    year = year,
+    director = director,
+    genre = genre,
+    posterUrl = posterUrl
+)
+
+fun FavoriteMovie.toEntity(): FavoriteMovieEntity = FavoriteMovieEntity(
+    imdbId = imdbId,
+    title = title,
+    year = year,
+    director = director,
+    genre = genre,
+    posterUrl = posterUrl
 )
 
 
