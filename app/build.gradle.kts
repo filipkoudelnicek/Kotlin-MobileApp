@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.moshi.kotlin)
     implementation(libs.okhttp.logging)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.coil.compose)
 
