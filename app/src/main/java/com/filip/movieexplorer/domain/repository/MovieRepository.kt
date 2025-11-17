@@ -1,5 +1,6 @@
 package com.filip.movieexplorer.domain.repository
 
+import com.filip.movieexplorer.domain.model.MovieDetail
 import com.filip.movieexplorer.domain.model.MovieSummary
 
 /**
@@ -8,6 +9,7 @@ import com.filip.movieexplorer.domain.model.MovieSummary
  */
 interface MovieRepository {
     suspend fun searchMovies(query: String): Result<List<MovieSummary>>
+    suspend fun getMovieDetail(imdbId: String): Result<MovieDetail>
 }
 
 

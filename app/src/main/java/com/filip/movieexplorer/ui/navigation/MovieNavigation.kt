@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.filip.movieexplorer.ui.screens.FavoritesScreen
 import com.filip.movieexplorer.ui.screens.HomeRoute
-import com.filip.movieexplorer.ui.screens.MovieDetailScreen
+import com.filip.movieexplorer.ui.screens.MovieDetailRoute
 
 @Composable
 fun MovieNavigation(
@@ -39,7 +39,7 @@ fun MovieNavigation(
             )
         ) { backStackEntry ->
             val imdbId = backStackEntry.arguments?.getString("imdbId") ?: ""
-            MovieDetailScreen(
+            MovieDetailRoute(
                 imdbId = imdbId,
                 onNavigateBack = {
                     navController.popBackStack()
