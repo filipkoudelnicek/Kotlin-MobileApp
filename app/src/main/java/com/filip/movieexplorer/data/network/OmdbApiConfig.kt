@@ -62,7 +62,7 @@ object OmdbApiConfig {
      * Creates OMDb API service instance.
      */
     fun createApiService(): OmdbApiService {
-        return createRetrofit().create(OmdbApiService::interface)
+        return createRetrofit().create(OmdbApiService::class.java)
     }
 }
 

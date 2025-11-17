@@ -10,43 +10,59 @@ import com.filip.movieexplorer.domain.model.FavoriteMovie
 import com.filip.movieexplorer.domain.model.MovieDetail
 import com.filip.movieexplorer.domain.model.MovieSummary
 import com.filip.movieexplorer.domain.repository.MovieRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class MovieRepositoryImpl(
     private val apiService: OmdbApiService,
     private val favoriteDao: FavoriteMovieDao
 ) : MovieRepository {
 
-    override suspend fun searchMovies(query: String): Result<List<MovieSummary>> = runCatching {
-        val response = apiService.searchMovies(
-            apikey = OmdbApiConfig.API_KEY,
-            query = query
-        )
+    override suspend fun searchMovies(query: String): Result<List<MovieSummary>> = withContext(Dispatchers.IO) {
+        runCatching {
+            Log.d(TAG, "Searching movies with query: $query")
+            val response = apiService.searchMovies(
+                apikey = OmdbApiConfig.API_KEY,
+                query = query
+            )
 
-        if (response.response.equals("False", ignoreCase = true)) {
-            throw IllegalStateException(response.error ?: "Unknown error")
+            Log.d(TAG, "API Response: ${response.response}")
+
+            if (response.response.equals("False", ignoreCase = true)) {
+                val errorMsg = response.error ?: "Unknown error"
+                Log.e(TAG, "API Error: $errorMsg")
+                throw IllegalStateException(errorMsg)
+            }
+
+            // Odstranění duplicit podle imdbId a filtrování null hodnot
+            val movies = response.search
+                ?.mapNotNull { it.toDomain() }
+                ?.distinctBy { it.imdbId }
+                .orEmpty()
+            
+            Log.d(TAG, "Fetched ${movies.size} unique movies for query: $query")
+            movies
         }
-
-        val movies = response.search?.map { it.toDomain() }.orEmpty()
-        Log.d(TAG, "Fetched ${movies.size} movies for query: $query")
-        movies
     }
 
-    override suspend fun getMovieDetail(imdbId: String): Result<MovieDetail> = runCatching {
-        val response = apiService.getMovieDetails(
-            apikey = OmdbApiConfig.API_KEY,
-            imdbId = imdbId,
-            plot = "full"
-        )
+    override suspend fun getMovieDetail(imdbId: String): Result<MovieDetail> = withContext(Dispatchers.IO) {
+        runCatching {
+            val response = apiService.getMovieDetails(
+                apikey = OmdbApiConfig.API_KEY,
+                imdbId = imdbId,
+                plot = "full"
+            )
 
-        if (response.response.equals("False", ignoreCase = true)) {
-            throw IllegalStateException(response.error ?: "Unknown error")
+            if (response.response.equals("False", ignoreCase = true)) {
+                throw IllegalStateException(response.error ?: "Unknown error")
+            }
+
+            val movieDetail = response.toDomain()
+            Log.d(TAG, "Fetched details for imdbId: $imdbId")
+            movieDetail
         }
-
-        val movieDetail = response.toDomain()
-        Log.d(TAG, "Fetched details for imdbId: $imdbId")
-        movieDetail
     }
 
     override fun observeFavorites(): Flow<List<FavoriteMovie>> {

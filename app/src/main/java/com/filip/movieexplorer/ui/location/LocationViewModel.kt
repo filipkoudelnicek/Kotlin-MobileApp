@@ -1,6 +1,7 @@
 package com.filip.movieexplorer.ui.location
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
@@ -34,6 +35,7 @@ class LocationViewModel(
         )
     }
 
+    @SuppressLint("MissingPermission")
     fun fetchLocation() {
         if (!hasLocationPermission()) {
             updatePermission(false)

@@ -7,4 +7,5 @@ captures/
 .cxx/
 \*/build/
 gradle-app.setting
+.vscode/
 

@@ -1,6 +1,7 @@
 [versions]
-agp = "8.5.2"
+agp = "8.7.0"
 kotlin = "1.9.25"
+ksp = "1.9.25-1.0.20"
 coreKtx = "1.13.1"
 composeBom = "2024.08.00"
 activityCompose = "1.9.0"
@@ -14,6 +15,7 @@ splashscreen = "1.0.1"
 navigationCompose = "2.8.3"
 coil = "2.7.0"
 playServicesLocation = "21.3.0"
+material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -40,9 +42,10 @@ play-services-location = { module = "com.google.android.gms:play-services-locati
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 

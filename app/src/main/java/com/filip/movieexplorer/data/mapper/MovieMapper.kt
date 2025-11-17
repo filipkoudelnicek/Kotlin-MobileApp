@@ -10,13 +10,19 @@ import com.filip.movieexplorer.domain.model.MovieSummary
 /**
  * Mapping utilities between DTOs and domain models.
  */
-fun MovieSearchItemDto.toDomain(): MovieSummary = MovieSummary(
-    imdbId = imdbId,
-    title = title,
-    year = year,
-    type = type,
-    posterUrl = poster.takeUnless { it.equals("N/A", ignoreCase = true) } ?: ""
-)
+fun MovieSearchItemDto.toDomain(): MovieSummary? {
+    // Vrátit null pokud chybí povinná pole
+    val id = imdbId ?: return null
+    val movieTitle = title ?: return null
+    
+    return MovieSummary(
+        imdbId = id,
+        title = movieTitle,
+        year = year ?: "N/A",
+        type = type ?: "movie",
+        posterUrl = poster.takeUnless { it.isNullOrBlank() || it.equals("N/A", ignoreCase = true) } ?: ""
+    )
+}
 
 fun MovieDetailDto.toDomain(): MovieDetail = MovieDetail(
     imdbId = imdbId.orEmpty(),
