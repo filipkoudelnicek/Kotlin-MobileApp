@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.MovieExplorer" parent="Theme.Material3.DynamicColors.DayNight">
+    <style name="Theme.MovieExplorer" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_movie_logo</item>
+        <item name="windowSplashScreenAnimationDuration">400</item>
+        <item name="postSplashScreenTheme">@style/Theme.MovieExplorer.Main</item>
+    </style>
+
+    <style name="Theme.MovieExplorer.Main" parent="Theme.Material3.DynamicColors.DayNight">
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
     </style>
 </resources>
