@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
@@ -58,7 +58,7 @@ import com.filip.movieexplorer.ui.home.HomeViewModel
 fun HomeRoute(
     onNavigateToDetails: (String) -> Unit,
     onNavigateToFavorites: () -> Unit,
-    onNavigateToLocation: () -> Unit
+    onNavigateToSettings: () -> Unit
 ) {
     val app = LocalContext.current.applicationContext as MovieExplorerApp
     val viewModel: HomeViewModel = viewModel(
@@ -81,7 +81,7 @@ fun HomeRoute(
         onMovieClick = onNavigateToDetails,
         onToggleFavorite = { viewModel.toggleFavorite(it) },
         onNavigateToFavorites = onNavigateToFavorites,
-        onNavigateToLocation = onNavigateToLocation,
+        onNavigateToSettings = onNavigateToSettings,
         onRetry = { viewModel.search(query.ifBlank { uiState.lastQuery }) }
     )
 }
@@ -95,7 +95,7 @@ fun HomeScreen(
     onMovieClick: (String) -> Unit,
     onToggleFavorite: (MovieSummary) -> Unit,
     onNavigateToFavorites: () -> Unit,
-    onNavigateToLocation: () -> Unit,
+    onNavigateToSettings: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -110,10 +110,10 @@ fun HomeScreen(
                             contentDescription = "Favorites"
                         )
                     }
-                    IconButton(onClick = onNavigateToLocation) {
+                    IconButton(onClick = onNavigateToSettings) {
                         Icon(
-                            imageVector = Icons.Default.LocationOn,
-                            contentDescription = "Location"
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Settings"
                         )
                     }
                 },

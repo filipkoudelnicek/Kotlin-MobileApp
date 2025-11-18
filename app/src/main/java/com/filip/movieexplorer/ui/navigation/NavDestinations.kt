@@ -7,7 +7,7 @@ object NavDestinations {
     const val HOME = "home"
     const val DETAILS = "details/{imdbId}"
     const val FAVORITES = "favorites"
-    const val LOCATION = "location"
+    const val SETTINGS = "settings"
     
     fun detailsRoute(imdbId: String) = "details/$imdbId"
 }

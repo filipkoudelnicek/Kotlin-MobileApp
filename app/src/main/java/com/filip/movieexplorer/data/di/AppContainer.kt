@@ -28,5 +28,9 @@ class AppContainer(context: Context) {
             favoriteDao = favoriteDao
         )
     }
+
+    val themePreferences: ThemePreferences by lazy {
+        ThemePreferences(context.applicationContext)
+    }
 }
 

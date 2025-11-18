@@ -9,8 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.filip.movieexplorer.ui.screens.FavoritesRoute
 import com.filip.movieexplorer.ui.screens.HomeRoute
-import com.filip.movieexplorer.ui.screens.LocationRoute
 import com.filip.movieexplorer.ui.screens.MovieDetailRoute
+import com.filip.movieexplorer.ui.screens.SettingsRoute
 
 @Composable
 fun MovieNavigation(
@@ -28,8 +28,8 @@ fun MovieNavigation(
                 onNavigateToFavorites = {
                     navController.navigate(NavDestinations.FAVORITES)
                 },
-                onNavigateToLocation = {
-                    navController.navigate(NavDestinations.LOCATION)
+                onNavigateToSettings = {
+                    navController.navigate(NavDestinations.SETTINGS)
                 }
             )
         }
@@ -62,8 +62,8 @@ fun MovieNavigation(
             )
         }
 
-        composable(NavDestinations.LOCATION) {
-            LocationRoute(
+        composable(NavDestinations.SETTINGS) {
+            SettingsRoute(
                 onNavigateBack = {
                     navController.popBackStack()
                 }

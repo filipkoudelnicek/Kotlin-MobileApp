@@ -94,7 +94,6 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.okhttp.logging)
-    implementation(libs.play.services.location)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.material)
 
