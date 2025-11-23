@@ -5,7 +5,8 @@
 /build/
 captures/
 .cxx/
-\*/build/
+*/build/
+app/build/
 gradle-app.setting
 .vscode/
 
