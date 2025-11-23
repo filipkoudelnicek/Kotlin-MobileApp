@@ -1,65 +1,86 @@
-# Movie Explorer (Android, Kotlin, MVVM)
+# Movie Explorer
 
-Movie Explorer is a Jetpack Compose Android app that lets you search the OMDb API for movies, view detailed information, and save favourites locally via Room. It follows a modular MVVM architecture with repositories mediating between network and persistence layers.
+Android aplikace vyvinutá v Kotlinu pro vyhledávání a prohlížení informací o filmech pomocí OMDb API. Aplikace využívá moderní Jetpack Compose UI a následuje MVVM architekturu s Repository patternem.
 
-## Tech Stack
+## 📱 Funkce
 
-- **Language:** Kotlin (Coroutines, Flow)
+- **Vyhledávání filmů** - Vyhledávání filmů přes OMDb API s real-time vyhledáváním
+- **Detail filmu** - Zobrazení detailních informací o filmu (název, rok, režisér, žánr, popis, plakát)
+- **Oblíbené filmy** - Ukládání oblíbených filmů do lokální Room databáze
+- **Tmavý režim** - Přepínání mezi světlým a tmavým motivem aplikace
+- **Splash screen** - Úvodní obrazovka při spuštění aplikace
+- **Moderní UI** - Material 3 design s Jetpack Compose
+
+## 🛠️ Technologie
+
+- **Jazyk:** Kotlin (Coroutines, Flow)
 - **UI:** Jetpack Compose + Navigation Compose + Material 3
-- **Architecture:** MVVM with Repository pattern, AppContainer service locator
-- **Network:** Retrofit + Moshi, OMDb API
-- **Persistence:** Room (favourite movies)
-- **Device APIs:** Google Play Services Location (geolocation screen)
-- **Other:** Coil for poster loading, AndroidX Splash Screen
+- **Architektura:** MVVM s Repository pattern, AppContainer service locator
+- **Síť:** Retrofit + Moshi, OMDb API
+- **Databáze:** Room (oblíbené filmy)
+- **Knihovny:** 
+  - Coil pro načítání obrázků
+  - AndroidX Splash Screen
+  - KSP pro Room code generation
 
-## Project Structure
+## 📁 Struktura projektu
 
 ```
 app/
- ├─ data/        // DTOs, Retrofit, Room, repositories, mappers
- ├─ domain/      // Domain models, repository interfaces
- ├─ ui/          // Compose screens, ViewModels, navigation, theming
- └─ MovieExplorerApp.kt // Application class with AppContainer
+ ├─ data/              // DTOs, Retrofit služby, Room databáze, repository implementace, mappery
+ ├─ domain/            // Domain modely, repository rozhraní
+ ├─ ui/                // Compose obrazovky, ViewModely, navigace, theming
+ │  ├─ screens/        // Hlavní obrazovky (Home, Detail, Favorites, Settings)
+ │  ├─ navigation/     // Navigační logika
+ │  └─ theme/          // Barevná schémata a typografie
+ └─ MovieExplorerApp.kt // Application třída s AppContainer
 ```
 
-## Prerequisites
+## 📋 Požadavky
 
-- Android Studio Ladybug (or newer) with AGP 8.5+
+- Android Studio Ladybug (nebo novější) s AGP 8.7+
 - JDK 17
-- Android device/emulator running API 24+
-- OMDb API key (free at https://www.omdbapi.com/apikey.aspx)
+- Android zařízení/emulátor s API 24+
+- OMDb API klíč (zdarma na https://www.omdbapi.com/apikey.aspx)
 
-## Setup & Build
+## 🚀 Instalace a build
 
-1. **Clone the repo**
+1. **Naklonujte repozitář**
    ```bash
    git clone https://github.com/filipkoudelnicek/Kotlin-MobileApp.git
    cd Kotlin-MobileApp
    ```
-2. **Add OMDb API key**  
-   - Open `app/build.gradle.kts`
-   - Replace the placeholder in `buildConfigField("String", "OMDB_API_KEY", "\"YOUR_OMDB_API_KEY\"")`
-3. **Sync & Build**  
-   - Open the project in Android Studio  
-   - Sync Gradle, then run `app` on an emulator or device (`Shift+F10`)
-4. **Permissions**  
-   - Location screen requests runtime permission the first time you open it. Allow coarse/fine location to display your coordinates.
 
-## Features Checklist
+2. **Přidejte OMDb API klíč**
+   - Otevřete `app/build.gradle.kts`
+   - Najděte `buildConfigField("String", "OMDB_API_KEY", ...)`
+   - Nahraďte aktuální hodnotu svým API klíčem:
+     ```kotlin
+     buildConfigField("String", "OMDB_API_KEY", "\"VÁŠ_API_KLÍČ\"")
+     ```
 
-- [x] OMDb search with pagination-ready endpoint
-- [x] Movie details (title, year, director, genre, plot, poster)
-- [x] Room-backed favourites list with toggles in search & detail
-- [x] Geolocation screen using FusedLocationProvider
-- [x] Splash screen + custom launcher icon
+3. **Synchronizujte a sestavte projekt**
+   - Otevřete projekt v Android Studio
+   - Synchronizujte Gradle soubory
+   - Spusťte aplikaci na emulátoru nebo zařízení (`Shift+F10`)
 
-## Testing Tips
+## 💡 Použití
 
-- Use the search screen to query e.g. “Star Wars”, tap a result to see details, toggle favourites via the star icons, and confirm the entry appears on the favourites screen.
-- Open the location screen from the home top bar to verify permission requests and current coordinates.
+- **Vyhledávání:** Zadejte název filmu do vyhledávacího pole na domovské obrazovce
+- **Detail filmu:** Klepněte na výsledek vyhledávání pro zobrazení detailních informací
+- **Oblíbené:** Přidávejte filmy do oblíbených pomocí ikony hvězdy v seznamu výsledků nebo na detailu filmu
+- **Nastavení:** Otevřete nastavení z domovské obrazovky pro přepnutí tmavého režimu
 
-## License
+## 📝 Verze
 
-This project is provided for educational purposes. Replace the OMDb key with your own before distributing builds.
+- **Version Code:** 1
+- **Version Name:** 1.0
+- **Min SDK:** 24
+- **Target SDK:** 35
+- **Compile SDK:** 35
+
+## 📄 Licence
+
+Tento projekt je určen pro vzdělávací účely. Před distribucí buildů nahraďte OMDb API klíč vlastním.
 
 
