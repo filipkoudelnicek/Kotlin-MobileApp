@@ -52,12 +52,13 @@ app/
    ```
 
 2. **Přidejte OMDb API klíč**
-   - Otevřete `app/build.gradle.kts`
-   - Najděte `buildConfigField("String", "OMDB_API_KEY", ...)`
-   - Nahraďte aktuální hodnotu svým API klíčem:
-     ```kotlin
-     buildConfigField("String", "OMDB_API_KEY", "\"VÁŠ_API_KLÍČ\"")
+   - Otevřete soubor `local.properties` v kořenovém adresáři projektu
+   - Pokud soubor neexistuje, vytvořte ho
+   - Přidejte řádek s vaším API klíčem:
+     ```properties
+     OMDB_API_KEY=váš_api_klíč_zde
      ```
+   - **Poznámka:** Soubor `local.properties` je již v `.gitignore`, takže nebude nahrán do gitu
 
 3. **Synchronizujte a sestavte projekt**
    - Otevřete projekt v Android Studio
@@ -78,6 +79,24 @@ app/
 - **Min SDK:** 24
 - **Target SDK:** 35
 - **Compile SDK:** 35
+
+## 🔒 Bezpečnost
+
+**DŮLEŽITÉ:** Pokud jste náhodou nahráli svůj OMDb API klíč do gitu:
+
+1. **Ihned změňte API klíč na OMDb API:**
+   - Přihlaste se na https://www.omdbapi.com/apikey.aspx
+   - Najděte možnost změny nebo zrušení API klíče
+   - Vytvořte nový API klíč
+
+2. **API klíč je nyní bezpečně uložen:**
+   - API klíč je uložen v `local.properties` (který je v `.gitignore`)
+   - Tento soubor není commitován do gitu
+   - Každý vývojář musí vytvořit svůj vlastní `local.properties` s vlastním API klíčem
+
+3. **Pro budoucí použití:**
+   - Nikdy neukládejte API klíče přímo v `build.gradle.kts` nebo jiných verzovaných souborech
+   - Vždy používejte `local.properties` pro lokální konfiguraci
 
 ## 📄 Licence
 
