@@ -1,10 +1,19 @@
 import java.io.File
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
 }
+
+// Load API key from local.properties
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
+}
+val omdbApiKey = localProperties.getProperty("OMDB_API_KEY") ?: "YOUR_OMDB_API_KEY_HERE"
 
 android {
     namespace = "com.filip.movieexplorer"
@@ -23,7 +32,7 @@ android {
         buildConfigField(
             "String",
             "OMDB_API_KEY",
-            "\"2cda5345\""
+            "\"$omdbApiKey\""
         )
     }
 
