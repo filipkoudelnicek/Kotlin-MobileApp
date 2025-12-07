@@ -12,7 +12,8 @@ import com.filip.movieexplorer.domain.repository.MovieRepository
  * In future commits this could be replaced with a DI framework.
  */
 class AppContainer(context: Context) {
-    private val omdbApiService by lazy { OmdbApiConfig.createApiService() }
+    private val appContext = context.applicationContext
+    private val omdbApiService by lazy { OmdbApiConfig.createApiService(appContext) }
     private val database by lazy {
         Room.databaseBuilder(
             context.applicationContext,

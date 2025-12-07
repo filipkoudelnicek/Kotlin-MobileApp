@@ -3,10 +3,13 @@ package com.filip.movieexplorer.data.network
 import com.filip.movieexplorer.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import android.content.Context
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 /**
@@ -23,19 +26,28 @@ object OmdbApiConfig {
         get() = BuildConfig.OMDB_API_KEY
 
     /**
-     * Creates OkHttpClient with logging interceptor for debugging.
+     * Creates OkHttpClient with logging interceptor and HTTP cache for better performance.
      */
-    private fun createOkHttpClient(): OkHttpClient {
+    private fun createOkHttpClient(context: Context? = null): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-        return OkHttpClient.Builder()
+        val builder = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
+
+        // Add HTTP cache if context is provided
+        context?.let {
+            val cacheSize = 10 * 1024 * 1024L // 10 MB
+            val cacheDir = File(it.cacheDir, "http_cache")
+            val cache = Cache(cacheDir, cacheSize)
+            builder.cache(cache)
+        }
+
+        return builder.build()
     }
 
     /**
@@ -50,10 +62,10 @@ object OmdbApiConfig {
     /**
      * Creates Retrofit instance configured for OMDb API.
      */
-    fun createRetrofit(): Retrofit {
+    fun createRetrofit(context: Context? = null): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(createOkHttpClient())
+            .client(createOkHttpClient(context))
             .addConverterFactory(MoshiConverterFactory.create(createMoshi()))
             .build()
     }
@@ -61,8 +73,8 @@ object OmdbApiConfig {
     /**
      * Creates OMDb API service instance.
      */
-    fun createApiService(): OmdbApiService {
-        return createRetrofit().create(OmdbApiService::class.java)
+    fun createApiService(context: Context? = null): OmdbApiService {
+        return createRetrofit(context).create(OmdbApiService::class.java)
     }
 }
 
