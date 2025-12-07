@@ -77,7 +77,7 @@ fun FavoritesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Oblíbené filmy") },
+                title = { Text("Favorite Movies") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -97,7 +97,7 @@ fun FavoritesScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Načítám oblíbené filmy…")
+                Text("Loading favorite movies…")
             }
         } else if (state.favorites.isEmpty()) {
             Column(
@@ -108,7 +108,7 @@ fun FavoritesScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Zatím nemáš žádné oblíbené filmy.",
+                    text = "You don't have any favorite movies yet.",
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center
                 )

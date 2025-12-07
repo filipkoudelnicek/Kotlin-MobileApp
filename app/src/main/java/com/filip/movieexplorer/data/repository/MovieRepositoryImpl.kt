@@ -36,7 +36,7 @@ class MovieRepositoryImpl(
                 throw IllegalStateException(errorMsg)
             }
 
-            // Odstranění duplicit podle imdbId a filtrování null hodnot
+            // Remove duplicates by imdbId and filter null values
             val movies = response.search
                 ?.mapNotNull { it.toDomain() }
                 ?.distinctBy { it.imdbId }

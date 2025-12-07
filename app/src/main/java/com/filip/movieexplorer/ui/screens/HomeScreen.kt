@@ -145,7 +145,7 @@ fun HomeScreen(
             ) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = null)
                 Spacer(modifier = Modifier.size(8.dp))
-                Text("Hledat")
+                Text("Search")
             }
 
             if (state.isLoading) {
@@ -154,7 +154,7 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp))
-                    Text("Načítám výsledky…")
+                    Text("Loading results…")
                 }
             }
 
@@ -164,14 +164,14 @@ fun HomeScreen(
                     color = MaterialTheme.colorScheme.error
                 )
                 TextButton(onClick = onRetry) {
-                    Text("Zkusit znovu")
+                    Text("Try again")
                 }
             }
 
             when {
                 state.movies.isEmpty() && !state.isLoading && state.errorMessage == null -> {
                     Text(
-                        text = "Začni vyhledávat podle názvu filmu.",
+                        text = "Start searching by movie title.",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }

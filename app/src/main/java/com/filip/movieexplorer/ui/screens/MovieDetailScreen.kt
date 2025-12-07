@@ -77,7 +77,7 @@ fun MovieDetailScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = state.movie?.title ?: "Detail filmu")
+                    Text(text = state.movie?.title ?: "Movie Details")
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
@@ -111,7 +111,7 @@ fun MovieDetailScreen(
                 ) {
                     CircularProgressIndicator()
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text("Načítám detail filmu…")
+                    Text("Loading movie details…")
                 }
             }
 
@@ -131,7 +131,7 @@ fun MovieDetailScreen(
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     TextButton(onClick = onRetry) {
-                        Text("Zkusit znovu")
+                        Text("Try again")
                     }
                 }
             }
@@ -180,9 +180,9 @@ private fun MovieDetailContent(
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
         )
         Text(text = "${movie.year} • ${movie.genre}")
-        Text(text = "Režisér: ${movie.director}")
+        Text(text = "Director: ${movie.director}")
         if (movie.actors.isNotBlank()) {
-            Text(text = "Herci: ${movie.actors}")
+            Text(text = "Actors: ${movie.actors}")
         }
         if (movie.imdbRating.isNotBlank()) {
             Text(text = "IMDb rating: ${movie.imdbRating}")

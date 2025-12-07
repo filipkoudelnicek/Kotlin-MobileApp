@@ -11,7 +11,7 @@ import com.filip.movieexplorer.domain.model.MovieSummary
  * Mapping utilities between DTOs and domain models.
  */
 fun MovieSearchItemDto.toDomain(): MovieSummary? {
-    // Vrátit null pokud chybí povinná pole
+    // Return null if required fields are missing
     val id = imdbId ?: return null
     val movieTitle = title ?: return null
     

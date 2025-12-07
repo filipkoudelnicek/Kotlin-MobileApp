@@ -55,7 +55,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Nastavení") },
+                title = { Text("Settings") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
@@ -86,13 +86,13 @@ fun SettingsScreen(
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        text = "Tmavý režim",
+                        text = "Dark mode",
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold
                         )
                     )
                     Text(
-                        text = "Přepněte mezi světlým a tmavým režimem aplikace",
+                        text = "Switch between light and dark mode of the application",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
